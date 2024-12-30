@@ -5,21 +5,35 @@
 package model;
 
 public class UserInfo {
+    private int id;
     private String username;
     private String password;
     private String email;
+    private String address;
+    private String phone;
 
     // Konstruktor tanpa argumen
     public UserInfo() {}
 
     // Konstruktor dengan parameter
-    public UserInfo(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
+public UserInfo(String username, String password, String email, String phone, String address) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
+}
+
 
     // Getter dan Setter
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -42,5 +56,21 @@ public class UserInfo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+     public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
