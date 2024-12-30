@@ -16,6 +16,9 @@ public class HalamanRegistrasi extends JFrame {
     private JTextField emailField;
     private JButton registerButton;
     private JButton backButton;
+    private JTextField phoneField;
+    private JTextField addressField;
+
 
     public HalamanRegistrasi() {
         // Pengaturan JFrame
@@ -55,10 +58,33 @@ public class HalamanRegistrasi extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 2;
         mainPanel.add(confirmPasswordLabel, gbc);
+        
+        // Tambahkan Label dan TextField untuk Nomor Telepon
+
+        JLabel phoneLabel = new JLabel("Nomor Telepon:");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        mainPanel.add(phoneLabel, gbc);
+
+        JTextField phoneField = new JTextField(20);
+        gbc.gridx = 1;
+        mainPanel.add(phoneField, gbc);
+
+        // Tambahkan Label dan TextField untuk Alamat
+        JLabel addressLabel = new JLabel("Alamat:");
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        mainPanel.add(addressLabel, gbc);
+
+        JTextField addressField = new JTextField(20);
+        gbc.gridx = 1;
+        mainPanel.add(addressField, gbc);
+
 
         confirmPasswordField = new JPasswordField(20);
         gbc.gridx = 1;
         mainPanel.add(confirmPasswordField, gbc);
+        
 
         // Label dan TextField untuk Email
         JLabel emailLabel = new JLabel("Email:");
@@ -70,17 +96,18 @@ public class HalamanRegistrasi extends JFrame {
         gbc.gridx = 1;
         mainPanel.add(emailField, gbc);
 
-        // Tombol Register
-        registerButton = new JButton("Daftar");
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        mainPanel.add(registerButton, gbc);
+// Tombol Register
+registerButton = new JButton("Daftar");
+gbc.gridx = 0;
+gbc.gridy = 6;
+gbc.gridwidth = 2;
+mainPanel.add(registerButton, gbc);
 
-        // Tombol Kembali ke Halaman Login
-        backButton = new JButton("Kembali ke Login");
-        gbc.gridy = 5;
-        mainPanel.add(backButton, gbc);
+// Tombol Kembali ke Halaman Login
+backButton = new JButton("Kembali ke Login");
+gbc.gridy = 7;
+mainPanel.add(backButton, gbc);
+
 
         // Tambahkan panel ke JFrame
         add(mainPanel);
@@ -92,43 +119,56 @@ public class HalamanRegistrasi extends JFrame {
 
     // Inner class untuk menangani registrasi pengguna
     private class RegisterActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
-            String confirmPassword = new String(confirmPasswordField.getPassword());
-            String email = emailField.getText();
+@Override
+public void actionPerformed(ActionEvent e) {
+    String username = usernameField.getText();
+    String password = new String(passwordField.getPassword());
+    String confirmPassword = new String(confirmPasswordField.getPassword());
+    String email = emailField.getText();
+    String phone = phoneField.getText();
+    String address = addressField.getText();
 
-            // Validasi input
-            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || email.isEmpty()) {
-                JOptionPane.showMessageDialog(HalamanRegistrasi.this,
-                        "Semua kolom harus diisi!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+    // Validasi input
+    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || email.isEmpty()
+            || phone.isEmpty() || address.isEmpty()) {
+        JOptionPane.showMessageDialog(HalamanRegistrasi.this,
+                "Semua kolom harus diisi!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            if (!password.equals(confirmPassword)) {
-                JOptionPane.showMessageDialog(HalamanRegistrasi.this,
-                        "Password dan konfirmasi password tidak cocok!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+    if (!password.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(HalamanRegistrasi.this,
+                "Password dan konfirmasi password tidak cocok!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            // Proses registrasi menggunakan controller
-            Registrasi registrasi = new Registrasi();
-            UserInfo user = new UserInfo(username, password, email);
+    if (!phone.matches("\\d{10,15}")) { // Validasi nomor telepon (10-15 digit angka)
+        JOptionPane.showMessageDialog(HalamanRegistrasi.this,
+                "Nomor telepon tidak valid!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-            boolean isRegistered = registrasi.registerUser(user); // Pastikan metode registerUser tersedia di controller
+    // Proses registrasi menggunakan controller
+    Registrasi registrasi = new Registrasi();
+    UserInfo user = new UserInfo(username, password, email, phone, address);
 
-            if (isRegistered) {
-                JOptionPane.showMessageDialog(HalamanRegistrasi.this,
-                        "Registrasi berhasil! Silakan login.");
-                HalamanLogin loginForm = new HalamanLogin();
-                loginForm.setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(HalamanRegistrasi.this,
-                        "Terjadi kesalahan saat registrasi. Silakan coba lagi.", "Kesalahan", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+    user.setPhone(phone);
+    user.setAddress(address);
+
+    boolean isRegistered = registrasi.registerUser(user);
+
+    if (isRegistered) {
+        JOptionPane.showMessageDialog(HalamanRegistrasi.this,
+                "Registrasi berhasil! Silakan login.");
+        HalamanLogin loginForm = new HalamanLogin();
+        loginForm.setVisible(true);
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(HalamanRegistrasi.this,
+                "Terjadi kesalahan saat registrasi. Silakan coba lagi.", "Kesalahan", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
     }
 
     // Inner class untuk kembali ke halaman login

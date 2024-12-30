@@ -89,7 +89,7 @@ public class HalamanLogin extends JFrame {
                 JOptionPane.showMessageDialog(HalamanLogin.this,
                         "Login berhasil! Selamat datang, " + user.getUsername());
                 // Navigasi ke Halaman Beranda
-                HalamanBeranda beranda = new HalamanBeranda();
+                HalamanBeranda beranda = new HalamanBeranda(user);
                 beranda.setVisible(true);
                 dispose();
             } else {

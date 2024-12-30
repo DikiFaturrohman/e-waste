@@ -1,12 +1,18 @@
 package view;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.UserInfo;
 
 public class HalamanBeranda extends JFrame {
-    public HalamanBeranda() {
+    private UserInfo currentUser;
+
+    public HalamanBeranda(UserInfo user) {
+        this.currentUser = user;
+        
         setTitle("Halaman Beranda");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
@@ -31,7 +37,11 @@ public class HalamanBeranda extends JFrame {
         profilButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new HalamanProfil().setVisible(true);
+                // Misalnya user adalah objek UserInfo yang diambil saat login
+           new HalamanProfil(currentUser).setVisible(true); // Pastikan currentUser adalah objek UserInfo yang valid
+
+ // Pastikan `currentUser` adalah objek `UserInfo` yang valid
+
                 dispose(); // Menutup halaman beranda
             }
         });
