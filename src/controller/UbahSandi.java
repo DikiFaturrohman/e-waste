@@ -29,4 +29,16 @@ public class UbahSandi {
         }
         return false;
     }
+    
+        public boolean updatePassword(UserInfo user) {
+    try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+        UserInfoMapper userMapper = session.getMapper(UserInfoMapper.class);
+        int result = userMapper.updatePassword(user.getId(), user.getPassword());
+        session.commit();
+        return result > 0; // Mengembalikan true jika update berhasil
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Gagal memperbarui password.");
+    }
+}
 }
