@@ -30,7 +30,7 @@ public class HalamanBeranda extends JFrame {
         
         // Panel tombol navigasi
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1, 10, 10));
+        buttonPanel.setLayout(new GridLayout(3, 2, 10, 10));
         
         // Tombol menuju Halaman Profil
         JButton profilButton = new JButton("Profil");
