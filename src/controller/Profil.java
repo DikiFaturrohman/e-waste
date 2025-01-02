@@ -24,9 +24,9 @@ public class Profil {
     public boolean updateUserProfile(UserInfo updatedUser) {
     try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
         UserInfoMapper userMapper = session.getMapper(UserInfoMapper.class);
-        int result = userMapper.updateUserProfile(updatedUser); // Mengambil nilai kembalian dari mapper
+        int result = userMapper.updateUserProfile(updatedUser);
         session.commit();
-        return result > 0; // Jika hasilnya lebih besar dari 0, berarti update berhasil
+        return result > 0; // Return true jika update berhasil
     } catch (Exception e) {
         e.printStackTrace();
         throw new RuntimeException("Gagal memperbarui data profil.");
