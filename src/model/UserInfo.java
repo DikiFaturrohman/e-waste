@@ -11,6 +11,7 @@ public class UserInfo {
     private String email;
     private String address;
     private String phone;
+    private String profilePicturePath;
 
     // Konstruktor tanpa argumen
     public UserInfo() {}
@@ -72,5 +73,14 @@ public UserInfo(String username, String password, String email, String phone, St
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    
+    // Getter dan Setter untuk profilePicturePath
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
     }
 }
