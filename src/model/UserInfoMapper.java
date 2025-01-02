@@ -4,8 +4,9 @@ import org.apache.ibatis.annotations.*;
 
 public interface UserInfoMapper {
 
-    @Select("SELECT * FROM user_info WHERE id = #{id}")
+    @Select("SELECT id, username, password, email, phone, address, profile_picture FROM user_info WHERE id = #{id}")
     UserInfo selectUserById(int id);
+
 
     @Insert("INSERT INTO user_info (username, password, email, phone, address) VALUES (#{username}, #{password}, #{email}, #{phone}, #{address})")
     void insertUser(UserInfo user);
@@ -13,7 +14,7 @@ public interface UserInfoMapper {
     @Update("UPDATE user_info SET password = #{password} WHERE id = #{id}")
     void updateUserPassword(UserInfo user);
 
-    @Update("UPDATE user_info SET username = #{username}, phone = #{phone}, address = #{address} WHERE id = #{id}")
+    @Update("UPDATE user_info SET username = #{username}, phone = #{phone}, address = #{address}, profile_picture = #{profilePicturePath} WHERE id = #{id}")
     int updateUserProfile(UserInfo user);
 
     @Select("SELECT * FROM user_info WHERE username = #{username}")
