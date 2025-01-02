@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 02, 2025 at 09:38 PM
+-- Generation Time: Jan 02, 2025 at 11:17 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.14
 
@@ -34,16 +34,16 @@ CREATE TABLE `user_info` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL
+  `address` varchar(255) NOT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user_info`
 --
 
-INSERT INTO `user_info` (`id`, `username`, `password`, `email`, `phone`, `address`) VALUES
-(1, 'diki', 'diki123', 'diki@gmail.com', '', ''),
-(2, 'hanhan', 'hanhan123', 'hanhan@gmail.com', '', '');
+INSERT INTO `user_info` (`id`, `username`, `password`, `email`, `phone`, `address`, `profile_picture`) VALUES
+(1, 'DIKI FATURROHMAN', 'diki123', 'diki@gmail.com', '08111222333', 'SUBANG', 'C:\\Users\\T U F\\Pictures\\Hatsune.Miku.full.4095399.jpg');
 
 -- --------------------------------------------------------
 
