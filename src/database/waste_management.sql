@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 02, 2025 at 11:17 PM
+-- Generation Time: Jan 03, 2025 at 08:12 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.14
 
@@ -43,7 +43,7 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`id`, `username`, `password`, `email`, `phone`, `address`, `profile_picture`) VALUES
-(1, 'DIKI FATURROHMAN', 'diki123', 'diki@gmail.com', '08111222333', 'SUBANG', 'C:\\Users\\T U F\\Pictures\\Hatsune.Miku.full.4095399.jpg');
+(1, 'DIKI FATURROHMAN', 'diki123', 'diki@gmail.com', '081223765077', 'SUBANG', NULL);
 
 -- --------------------------------------------------------
 
@@ -57,6 +57,16 @@ CREATE TABLE `wastes` (
   `category` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `wastes`
+--
+
+INSERT INTO `wastes` (`id`, `category`, `type`) VALUES
+(1, 'Electronics', 'Mobile Phone'),
+(2, 'Electronics', 'Laptop'),
+(3, 'Household', 'Refrigerator'),
+(4, 'Household', 'Microwave');
 
 --
 -- Indexes for dumped tables
@@ -89,7 +99,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT for table `wastes`
 --
 ALTER TABLE `wastes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
