@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface WasteMapper {
 
-    @Select("SELECT * FROM waste")
+    @Select("SELECT * FROM wastes")
     List<Waste> selectAllWaste();
 }

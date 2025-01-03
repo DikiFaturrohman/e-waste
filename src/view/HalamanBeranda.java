@@ -48,11 +48,11 @@ public class HalamanBeranda extends JFrame {
         buttonPanel.add(profilButton);
         
         // Tombol menuju Halaman Kategori
-        JButton kategoriButton = new JButton("Kategori");
+        JButton kategoriButton = new JButton("Daftar Sampah Elektronik");
         kategoriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new HalamanKategori().setVisible(true);
+                new HalamanKategori(currentUser).setVisible(true);
                 dispose(); // Menutup halaman beranda
             }
         });
