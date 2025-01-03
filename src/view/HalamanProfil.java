@@ -140,7 +140,7 @@ public class HalamanProfil extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Pindah ke halaman ubah sandi
-            new HalamanUbahSandi().setVisible(true);
+            new HalamanUbahSandi(currentUser).setVisible(true);
             HalamanProfil.this.dispose(); // Menutup halaman profil
         }
     }
