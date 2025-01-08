@@ -40,7 +40,7 @@ public class HalamanBeranda extends JFrame {
                 // Misalnya user adalah objek UserInfo yang diambil saat login
            new HalamanProfil(currentUser).setVisible(true); // Pastikan currentUser adalah objek UserInfo yang valid
 
- // Pastikan `currentUser` adalah objek `UserInfo` yang valid
+ // Pastikan `currentUser` adalah objek `UserInfo` yang valid 
 
                 dispose(); // Menutup halaman beranda
             }
