@@ -6,6 +6,9 @@ public interface UserInfoMapper {
 
     @Select("SELECT id, username, password, email, phone, address, profile_picture FROM user_info WHERE id = #{id}")
     UserInfo selectUserById(int id);
+    
+    @Select("SELECT * FROM user_info WHERE email = #{email}")
+    UserInfo selectUserByEmail(String email);
 
 
     @Insert("INSERT INTO user_info (username, password, email, phone, address) VALUES (#{username}, #{password}, #{email}, #{phone}, #{address})")
