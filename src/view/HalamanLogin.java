@@ -14,12 +14,13 @@ public class HalamanLogin extends JFrame {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton registerButton;
+    private JButton forgotPasswordButton;
 
     public HalamanLogin() {
         // Pengaturan JFrame
         setTitle("Halaman Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 400); // Perbesar ukuran jendela
+        setSize(500, 500); // Perbesar ukuran jendela
         setLocationRelativeTo(null);
 
         // Panel utama
@@ -80,6 +81,11 @@ public class HalamanLogin extends JFrame {
         formPanel.add(registerButton, gbc);
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
+        
+        forgotPasswordButton = new JButton("Lupa Sandi");
+        styleButton(forgotPasswordButton, new Color(255, 140, 0));
+        gbc.gridy = 4; // Posisi di bawah tombol register
+        formPanel.add(forgotPasswordButton, gbc);
 
         // Footer
         JLabel footerLabel = new JLabel("Belum punya akun? Daftar sekarang!");
@@ -94,6 +100,8 @@ public class HalamanLogin extends JFrame {
         // Event Listener
         loginButton.addActionListener(new LoginActionListener());
         registerButton.addActionListener(new RegisterActionListener());
+        forgotPasswordButton.addActionListener(new ForgotPasswordActionListener());
+
     }
 
     // Metode untuk memberikan gaya pada tombol
@@ -144,6 +152,17 @@ public class HalamanLogin extends JFrame {
             dispose();
         }
     }
+    
+    private class ForgotPasswordActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        HalamanLupaSandi lupaSandi = new HalamanLupaSandi();
+        lupaSandi.setVisible(true);
+        dispose(); // Tutup halaman login jika diinginkan
+    }
+    }
+    
+    
 
    
 }
