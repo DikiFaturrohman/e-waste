@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
 import controller.LupaSandiController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,70 +19,124 @@ public class HalamanLupaSandi extends JFrame {
         controller = new LupaSandiController();
 
         setTitle("Lupa Kata Sandi");
-        setSize(400, 300);
+        setSize(450, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
 
+        // Set layout and background color
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(new Color(240, 248, 255));
+        add(panel);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Title label
+        JLabel titleLabel = new JLabel("Lupa Kata Sandi", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setForeground(new Color(30, 144, 255));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(titleLabel, gbc);
+
+        // Email label and field
         JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setBounds(50, 30, 100, 25);
-        add(emailLabel);
+        emailLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        panel.add(emailLabel, gbc);
 
-        emailField = new JTextField();
-        emailField.setBounds(150, 30, 200, 25);
-        add(emailField);
+emailField = new JTextField();
+emailField.setFont(new Font("Arial", Font.PLAIN, 14));
+emailField.setPreferredSize(new Dimension(250, 25)); // Menentukan lebar text field
+gbc.gridx = 1;
+gbc.gridy = 1;
+panel.add(emailField, gbc);
 
+        // Send OTP button
         sendOtpButton = new JButton("Kirim OTP");
-        sendOtpButton.setBounds(50, 70, 300, 25);
+        sendOtpButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        sendOtpButton.setBackground(new Color(30, 144, 255));
+        sendOtpButton.setForeground(Color.WHITE);
         sendOtpButton.addActionListener(new SendOtpListener());
-        add(sendOtpButton);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        panel.add(sendOtpButton, gbc);
 
+        // OTP label and field
         JLabel otpLabel = new JLabel("Kode OTP:");
-        otpLabel.setBounds(50, 110, 100, 25);
-        add(otpLabel);
+        otpLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        panel.add(otpLabel, gbc);
 
         otpField = new JTextField();
-        otpField.setBounds(150, 110, 200, 25);
-        add(otpField);
+        otpField.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        panel.add(otpField, gbc);
 
+        // Verify OTP button
         verifyOtpButton = new JButton("Verifikasi OTP");
-        verifyOtpButton.setBounds(50, 150, 300, 25);
+        verifyOtpButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        verifyOtpButton.setBackground(new Color(34, 139, 34));
+        verifyOtpButton.setForeground(Color.WHITE);
         verifyOtpButton.addActionListener(new VerifyOtpListener());
-        add(verifyOtpButton);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        panel.add(verifyOtpButton, gbc);
 
+        // New password label and field
         JLabel newPasswordLabel = new JLabel("Kata Sandi Baru:");
-        newPasswordLabel.setBounds(50, 190, 150, 25);
-        add(newPasswordLabel);
+        newPasswordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        panel.add(newPasswordLabel, gbc);
 
         newPasswordField = new JPasswordField();
-        newPasswordField.setBounds(150, 190, 200, 25);
-        add(newPasswordField);
+        newPasswordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        panel.add(newPasswordField, gbc);
 
+        // Reset password button
         resetPasswordButton = new JButton("Reset Password");
-        resetPasswordButton.setBounds(50, 230, 300, 25);
+        resetPasswordButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        resetPasswordButton.setBackground(new Color(220, 20, 60));
+        resetPasswordButton.setForeground(Color.WHITE);
         resetPasswordButton.addActionListener(new ResetPasswordListener());
-        add(resetPasswordButton);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        panel.add(resetPasswordButton, gbc);
 
         setLocationRelativeTo(null);
     }
 
-private class SendOtpListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String email = emailField.getText();
-        if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(HalamanLupaSandi.this, "Email tidak boleh kosong.");
-            return;
-        }
+    private class SendOtpListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String email = emailField.getText();
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(HalamanLupaSandi.this, "Email tidak boleh kosong.");
+                return;
+            }
 
-        String otpCode = controller.generateOtp(email);
-        if (otpCode != null) {
-            JOptionPane.showMessageDialog(HalamanLupaSandi.this, "OTP telah dikirim ke email Anda.");
-        } else {
-            JOptionPane.showMessageDialog(HalamanLupaSandi.this, "Gagal mengirim OTP. Coba lagi nanti.");
+            String otpCode = controller.generateOtp(email);
+            if (otpCode != null) {
+                JOptionPane.showMessageDialog(HalamanLupaSandi.this, "OTP telah dikirim ke email Anda.");
+            } else {
+                JOptionPane.showMessageDialog(HalamanLupaSandi.this, "Gagal mengirim OTP. Coba lagi nanti.");
+            }
         }
     }
-}
-
 
     private class VerifyOtpListener implements ActionListener {
         @Override
