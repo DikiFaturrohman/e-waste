@@ -12,6 +12,8 @@ public class UserInfo {
     private String address;
     private String phone;
     private String profilePicturePath;
+    private String role; // Tambahkan atribut role
+
 
     // Konstruktor tanpa argumen
     public UserInfo() {}
@@ -82,5 +84,13 @@ public UserInfo(String username, String password, String email, String phone, St
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath;
+    }
+    
+        public String getRole() {
+        return role;
+    }
+
+        public void setRole(String role) {
+        this.role = role;
     }
 }

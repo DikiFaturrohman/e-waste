@@ -101,7 +101,6 @@ public class HalamanLogin extends JFrame {
         loginButton.addActionListener(new LoginActionListener());
         registerButton.addActionListener(new RegisterActionListener());
         forgotPasswordButton.addActionListener(new ForgotPasswordActionListener());
-
     }
 
     // Metode untuk memberikan gaya pada tombol
@@ -133,9 +132,22 @@ public class HalamanLogin extends JFrame {
             if (user != null) {
                 JOptionPane.showMessageDialog(HalamanLogin.this,
                         "Login berhasil! Selamat datang, " + user.getUsername());
-                HalamanBeranda beranda = new HalamanBeranda(user);
-                beranda.setVisible(true);
-                dispose();
+
+                // Cek role user dan arahkan ke halaman yang sesuai
+                if ("admin".equals(user.getRole())) {
+                    System.out.println("Admin login berhasil, membuka AdminDashboard.");
+                    AdminDashboard adminDashboard = new AdminDashboard();
+                    adminDashboard.setVisible(true);
+                } else if ("user".equals(user.getRole())) {
+                    System.out.println("User login berhasil, membuka HalamanBeranda.");
+                    HalamanBeranda beranda = new HalamanBeranda(user);
+                    beranda.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(HalamanLogin.this,
+                            "Role tidak dikenal.", "Kesalahan", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                dispose();  // Tutup halaman login setelah pengalihan
             } else {
                 JOptionPane.showMessageDialog(HalamanLogin.this,
                         "Username atau password salah!", "Kesalahan", JOptionPane.ERROR_MESSAGE);
@@ -152,17 +164,14 @@ public class HalamanLogin extends JFrame {
             dispose();
         }
     }
-    
-    private class ForgotPasswordActionListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        HalamanLupaSandi lupaSandi = new HalamanLupaSandi();
-        lupaSandi.setVisible(true);
-        dispose(); // Tutup halaman login jika diinginkan
-    }
-    }
-    
-    
 
-   
+    // Inner class untuk menangani lupa password
+    private class ForgotPasswordActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            HalamanLupaSandi lupaSandi = new HalamanLupaSandi();
+            lupaSandi.setVisible(true);
+            dispose(); // Tutup halaman login jika diinginkan
+        }
+    }
 }
