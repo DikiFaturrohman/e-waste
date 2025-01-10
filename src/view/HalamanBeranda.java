@@ -1,6 +1,5 @@
 package view;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,54 +11,50 @@ public class HalamanBeranda extends JFrame {
 
     public HalamanBeranda(UserInfo user) {
         this.currentUser = user;
-        
+
+        // Pengaturan JFrame
         setTitle("Halaman Beranda");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(500, 400); // Perbesar ukuran jendela
         setLocationRelativeTo(null);
 
-        // Panel utama
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        
-        // Label selamat datang
-        JLabel welcomeLabel = new JLabel("Selamat datang di Halaman Beranda!", JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        welcomeLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        panel.add(welcomeLabel, BorderLayout.NORTH);
-        
-        // Panel tombol navigasi
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 2, 10, 10));
-        
-        // Tombol menuju Halaman Profil
+        // Panel Utama
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(Color.WHITE);
+
+        // Label Selamat Datang
+        JLabel welcomeLabel = new JLabel("Selamat datang di Halaman Beranda!");
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Tombol Profil
         JButton profilButton = new JButton("Profil");
+        styleButton(profilButton, new Color(59, 89, 152));
+
         profilButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Misalnya user adalah objek UserInfo yang diambil saat login
-           new HalamanProfil(currentUser).setVisible(true); // Pastikan currentUser adalah objek UserInfo yang valid
-
- // Pastikan `currentUser` adalah objek `UserInfo` yang valid
-
+                new HalamanProfil(currentUser).setVisible(true);
                 dispose(); // Menutup halaman beranda
             }
         });
-        buttonPanel.add(profilButton);
-        
-        // Tombol menuju Halaman Kategori
-        JButton kategoriButton = new JButton("Kategori");
+
+        // Tombol Daftar Sampah Elektronik
+        JButton kategoriButton = new JButton("Daftar Sampah Elektronik");
+        styleButton(kategoriButton, new Color(60, 179, 113));
+
         kategoriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new HalamanKategori().setVisible(true);
+                new HalamanKategori(currentUser).setVisible(true);
                 dispose(); // Menutup halaman beranda
             }
         });
-        buttonPanel.add(kategoriButton);
-        
+
         // Tombol Logout
         JButton logoutButton = new JButton("Logout");
+        styleButton(logoutButton, new Color(220, 20, 60));
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,12 +62,42 @@ public class HalamanBeranda extends JFrame {
                 dispose(); // Menutup halaman beranda
             }
         });
-        buttonPanel.add(logoutButton);
-        
-        // Tambahkan panel tombol ke panel utama
-        panel.add(buttonPanel, BorderLayout.CENTER);
-        
+
+        // Layout menggunakan GroupLayout
+        GroupLayout layout = new GroupLayout(mainPanel);
+        mainPanel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(welcomeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(profilButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                .addComponent(kategoriButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+        );
+
+        layout.setVerticalGroup(
+            layout.createSequentialGroup()
+                .addComponent(welcomeLabel)
+                .addGap(30)
+                .addComponent(profilButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                .addComponent(kategoriButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+        );
+
         // Tambahkan panel utama ke frame
-        add(panel);
+        add(mainPanel);
     }
+
+    // Metode untuk mengatur gaya tombol
+    private void styleButton(JButton button, Color bgColor) {
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setFocusPainted(false);
+        button.setPreferredSize(new Dimension(250, 50));
+    }
+
+    
 }

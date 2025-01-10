@@ -15,5 +15,6 @@
     <mappers>
         <mapper class="model.UserInfoMapper"/>
         <mapper class="model.WasteMapper"/>
+        <mapper class="model.UserOtpMapper"/>
     </mappers>
 </configuration>
