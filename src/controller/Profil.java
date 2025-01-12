@@ -33,6 +33,18 @@ public class Profil {
     }
 }
     
+    public void deleteUserAccount(int userId) {
+    try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+        UserInfoMapper userMapper = session.getMapper(UserInfoMapper.class);
+        userMapper.deleteUserById(userId);
+        session.commit();
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Gagal menghapus akun.");
+    }
+}
+
+    
 
 
 

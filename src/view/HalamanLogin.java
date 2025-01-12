@@ -88,7 +88,7 @@ public class HalamanLogin extends JFrame {
         formPanel.add(forgotPasswordButton, gbc);
 
         // Footer
-        JLabel footerLabel = new JLabel("Belum punya akun? Daftar sekarang!");
+        JLabel footerLabel = new JLabel("");
         footerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         footerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));

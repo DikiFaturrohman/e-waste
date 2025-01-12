@@ -41,7 +41,7 @@ public class HalamanUbahSandi extends JFrame {
         gbc.gridy = 0;
         panel.add(labelOldPassword, gbc);
 
-        JTextField fieldOldPassword = new JTextField();
+        JPasswordField fieldOldPassword = new JPasswordField();
         fieldOldPassword.setFont(fieldFont);
         gbc.gridx = 1;
         gbc.weightx = 0.7;
@@ -57,7 +57,7 @@ public class HalamanUbahSandi extends JFrame {
         gbc.ipadx = 0;
         panel.add(labelNewPassword, gbc);
 
-        JTextField fieldNewPassword = new JTextField();
+        JPasswordField fieldNewPassword = new JPasswordField();
         fieldNewPassword.setFont(fieldFont);
         gbc.gridx = 1;
         gbc.weightx = 0.7;
@@ -73,7 +73,7 @@ public class HalamanUbahSandi extends JFrame {
         gbc.ipadx = 0;
         panel.add(labelConfirmPassword, gbc);
 
-        JTextField fieldConfirmPassword = new JTextField();
+        JPasswordField fieldConfirmPassword = new JPasswordField();
         fieldConfirmPassword.setFont(fieldFont);
         gbc.gridx = 1;
         gbc.weightx = 0.7;
@@ -83,7 +83,7 @@ public class HalamanUbahSandi extends JFrame {
         // Tombol ubah sandi
         JButton btnChangePassword = new JButton("Ubah Sandi");
         btnChangePassword.setFont(labelFont);
-        btnChangePassword.setBackground(new Color(0, 123, 255));
+        btnChangePassword.setBackground(new Color(60, 179, 113));
         btnChangePassword.setForeground(Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -96,8 +96,8 @@ public class HalamanUbahSandi extends JFrame {
         // Tombol kembali ke halaman profil
         JButton btnBackToProfile = new JButton("Kembali ke Halaman Profil");
         btnBackToProfile.setFont(labelFont);
-        btnBackToProfile.setBackground(new Color(192, 192, 192));
-        btnBackToProfile.setForeground(Color.BLACK);
+        btnBackToProfile.setBackground(new Color(59, 89, 152));
+        btnBackToProfile.setForeground(Color.WHITE);
         gbc.gridy = 4;
         panel.add(btnBackToProfile, gbc);
 
