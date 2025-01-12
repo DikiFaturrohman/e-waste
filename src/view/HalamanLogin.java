@@ -83,7 +83,7 @@ public class HalamanLogin extends JFrame {
         mainPanel.add(formPanel, BorderLayout.CENTER);
         
         forgotPasswordButton = new JButton("Lupa Sandi");
-        styleButton(forgotPasswordButton, new Color(255, 140, 0));
+        styleButton(forgotPasswordButton, new Color(255, 0, 0));
         gbc.gridy = 4; // Posisi di bawah tombol register
         formPanel.add(forgotPasswordButton, gbc);
 
