@@ -48,21 +48,10 @@ public class HalamanProfil extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Foto Profil
-        profilePicLabel = new JLabel();
-        profilePicLabel.setPreferredSize(new Dimension(150, 150));
-        profilePicLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        profilePicLabel.setIcon(loadImage("path_to_default_image.jpg")); // Path default foto profil
-        profilePicLabel.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 2));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        formPanel.add(profilePicLabel, gbc);
+
 
         // Tombol Ubah Foto Profil
-        changeProfilePicButton = createStyledButton("Ubah Foto Profil");
-        gbc.gridy = 1;
-        formPanel.add(changeProfilePicButton, gbc);
-        changeProfilePicButton.addActionListener(new ChangeProfilePicButtonActionListener());
+
 
         // Username
         formPanel.add(createFormLabel("Username"), updateConstraints(gbc, 0, 2));
@@ -92,6 +81,11 @@ public class HalamanProfil extends JFrame {
         gbc.gridy = 6;
         formPanel.add(changePasswordButton, gbc);
         changePasswordButton.addActionListener(new ChangePasswordButtonActionListener());
+        
+        JButton deleteAccountButton = createDeleteButton("Hapus Akun");
+        gbc.gridy = 8; // Menempatkan tombol di bawah tombol kembali
+        formPanel.add(deleteAccountButton, gbc);
+        deleteAccountButton.addActionListener(new DeleteAccountButtonActionListener());
 
         // Tombol Kembali
         backButton = createStyledButton("Kembali ke Halaman Beranda");
@@ -104,6 +98,8 @@ public class HalamanProfil extends JFrame {
         // Tambahkan panel utama ke frame
         add(mainPanel);
     }
+    
+    
 
     private JLabel createFormLabel(String text) {
         JLabel label = new JLabel(text);
@@ -111,6 +107,17 @@ public class HalamanProfil extends JFrame {
         label.setForeground(new Color(50, 50, 50));
         return label;
     }
+    
+    private JButton createDeleteButton(String text) {
+    JButton button = new JButton(text);
+    button.setBackground(new Color(220, 20, 60)); // Warna merah
+    button.setForeground(Color.WHITE); // Warna teks putih
+    button.setFont(new Font("SansSerif", Font.BOLD, 14));
+    button.setFocusPainted(false);
+    button.setPreferredSize(new Dimension(200, 40));
+    return button;
+}
+
 
     private GridBagConstraints updateConstraints(GridBagConstraints gbc, int x, int y) {
         gbc.gridx = x;
@@ -128,6 +135,8 @@ public class HalamanProfil extends JFrame {
         }
         return null;
     }
+    
+    
 
     private JTextField createRoundedTextField(String text, String placeholder) {
         JTextField textField = new JTextField(text);
@@ -142,7 +151,7 @@ public class HalamanProfil extends JFrame {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setBackground(new Color(34, 45, 65)); // Warna dasar biru gelap
+        button.setBackground(new Color(59, 89, 152)); // Warna dasar biru gelap
         button.setForeground(Color.WHITE);
         button.setFont(new Font("SansSerif", Font.BOLD, 14));
         button.setFocusPainted(false);
@@ -173,6 +182,47 @@ public class HalamanProfil extends JFrame {
             HalamanProfil.this.dispose();
         }
     }
+    
+    private class DeleteAccountButtonActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int confirmation = JOptionPane.showConfirmDialog(
+            HalamanProfil.this,
+            "Apakah Anda yakin ingin menghapus akun ini? Tindakan ini tidak dapat dibatalkan.",
+            "Konfirmasi Hapus Akun",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmation == JOptionPane.YES_OPTION) {
+            Profil profilController = new Profil();
+            try {
+                profilController.deleteUserAccount(currentUser.getId());
+                JOptionPane.showMessageDialog(
+                    HalamanProfil.this,
+                    "Akun Anda telah berhasil dihapus.",
+                    "Hapus Akun Berhasil",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                new HalamanLogin().setVisible(true); // Mengarahkan ke halaman login
+                HalamanProfil.this.dispose(); // Menutup halaman profil
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                    HalamanProfil.this,
+                    "Gagal menghapus akun. Silakan coba lagi.",
+                    "Kesalahan",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    }
+}
+
+    
+    
+    
+    
 
     private class ChangeProfilePicButtonActionListener implements ActionListener {
         @Override

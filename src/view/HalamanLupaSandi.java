@@ -12,6 +12,7 @@ public class HalamanLupaSandi extends JFrame {
     private JButton sendOtpButton, verifyOtpButton, resetPasswordButton;
     private JTextField otpField;
     private JPasswordField newPasswordField;
+    private JButton backButton;
 
     private LupaSandiController controller;
 
@@ -35,7 +36,7 @@ public class HalamanLupaSandi extends JFrame {
         // Title label
         JLabel titleLabel = new JLabel("Lupa Kata Sandi", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titleLabel.setForeground(new Color(30, 144, 255));
+        titleLabel.setForeground(new Color(0, 0, 0));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -109,13 +110,29 @@ panel.add(emailField, gbc);
         // Reset password button
         resetPasswordButton = new JButton("Reset Password");
         resetPasswordButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        resetPasswordButton.setBackground(new Color(220, 20, 60));
+        resetPasswordButton.setBackground(new Color(255, 0, 0));
         resetPasswordButton.setForeground(Color.WHITE);
         resetPasswordButton.addActionListener(new ResetPasswordListener());
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
         panel.add(resetPasswordButton, gbc);
+        
+        backButton = new JButton("Kembali");
+backButton.setFont(new Font("Arial", Font.PLAIN, 14));
+backButton.setBackground(new Color(59, 89, 152)); // Warna abu-abu
+backButton.setForeground(Color.WHITE);
+backButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        new HalamanLogin().setVisible(true); // Buka halaman login
+        dispose(); // Tutup halaman lupa sandi
+    }
+});
+gbc.gridx = 0;
+gbc.gridy = 7; // Tambahkan di posisi bawah
+gbc.gridwidth = 2; // Spanning across two columns
+panel.add(backButton, gbc); 
 
         setLocationRelativeTo(null);
     }
