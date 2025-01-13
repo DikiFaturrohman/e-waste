@@ -122,7 +122,7 @@ mainPanel.add(actionAndBackPanel, BorderLayout.SOUTH);
     
     private void styleTableHeader(JTable table) {
     JTableHeader header = table.getTableHeader();
-    header.setBackground(new Color(0, 128, 0)); // Warna hijau
+    header.setBackground(new Color(59, 89, 152)); // Warna biru
     header.setForeground(Color.WHITE); // Teks header warna putih
     header.setFont(new Font("Arial", Font.BOLD, 14));
     header.setReorderingAllowed(false); // Mencegah reordering kolom
