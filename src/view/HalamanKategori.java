@@ -71,6 +71,19 @@ public class HalamanKategori extends JFrame {
         JButton editButton = new JButton("Ubah");
         JButton deleteButton = new JButton("Hapus");
 
+        // Set warna tombol
+        addButton.setBackground(new Color(0, 128, 0)); // Hijau
+        addButton.setForeground(Color.WHITE);
+        addButton.setFont(new Font("Arial", Font.BOLD, 14));
+
+        editButton.setBackground(new Color(0, 102, 204)); // Biru
+        editButton.setForeground(Color.WHITE);
+        editButton.setFont(new Font("Arial", Font.BOLD, 14));
+
+        deleteButton.setBackground(new Color(204, 0, 0)); // Merah
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 14));
+        
         actionPanel.add(addButton);
         actionPanel.add(editButton);
         actionPanel.add(deleteButton);
