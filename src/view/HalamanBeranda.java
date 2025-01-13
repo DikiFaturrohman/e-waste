@@ -52,7 +52,7 @@ public class HalamanBeranda extends JFrame {
         });
 
         // Tombol Logout
-        JButton logoutButton = new JButton("Logout");
+        JButton logoutButton = new JButton("Keluar");
         styleButton(logoutButton, new Color(220, 20, 60));
 
         logoutButton.addActionListener(new ActionListener() {
@@ -80,7 +80,7 @@ public class HalamanBeranda extends JFrame {
         layout.setVerticalGroup(
             layout.createSequentialGroup()
                 .addComponent(welcomeLabel)
-                .addGap(30)
+                .addGap(70)
                 .addComponent(profilButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                 .addComponent(kategoriButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                 .addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)

@@ -67,7 +67,7 @@ public class HalamanLogin extends JFrame {
         formPanel.add(passwordField, gbc);
 
         // Tombol Login
-        loginButton = new JButton("Login");
+        loginButton = new JButton("Masuk");
         styleButton(loginButton, new Color(59, 89, 152));
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -83,12 +83,12 @@ public class HalamanLogin extends JFrame {
         mainPanel.add(formPanel, BorderLayout.CENTER);
         
         forgotPasswordButton = new JButton("Lupa Sandi");
-        styleButton(forgotPasswordButton, new Color(255, 140, 0));
+        styleButton(forgotPasswordButton, new Color(255, 0, 0));
         gbc.gridy = 4; // Posisi di bawah tombol register
         formPanel.add(forgotPasswordButton, gbc);
 
         // Footer
-        JLabel footerLabel = new JLabel("Belum punya akun? Daftar sekarang!");
+        JLabel footerLabel = new JLabel("");
         footerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         footerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));

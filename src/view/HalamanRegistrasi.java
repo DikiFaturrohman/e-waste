@@ -69,7 +69,7 @@ public class HalamanRegistrasi extends JFrame {
         mainPanel.add(formPanel, BorderLayout.CENTER);
 
         // Footer
-        JLabel footerLabel = new JLabel("Sudah memiliki akun? Silakan login.");
+        JLabel footerLabel = new JLabel("");
         footerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         footerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
