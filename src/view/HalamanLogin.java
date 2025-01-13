@@ -67,7 +67,7 @@ public class HalamanLogin extends JFrame {
         formPanel.add(passwordField, gbc);
 
         // Tombol Login
-        loginButton = new JButton("Login");
+        loginButton = new JButton("Masuk");
         styleButton(loginButton, new Color(59, 89, 152));
         gbc.gridx = 0;
         gbc.gridy = 2;

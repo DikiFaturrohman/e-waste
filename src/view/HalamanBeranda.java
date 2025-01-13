@@ -52,7 +52,7 @@ public class HalamanBeranda extends JFrame {
         });
 
         // Tombol Logout
-        JButton logoutButton = new JButton("Logout");
+        JButton logoutButton = new JButton("Keluar");
         styleButton(logoutButton, new Color(220, 20, 60));
 
         logoutButton.addActionListener(new ActionListener() {
