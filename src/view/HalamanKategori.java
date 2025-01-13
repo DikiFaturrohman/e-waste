@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Set;
 import javax.swing.table.JTableHeader;
 import model.UserInfo;
+import model.WasteMapper;
+import org.apache.ibatis.session.SqlSession;
+import util.MyBatisUtil;
 
 public class HalamanKategori extends JFrame {
     private JTable categoryTable;
@@ -58,6 +61,28 @@ public class HalamanKategori extends JFrame {
         tablePanel.add(createLabeledPanel("", combinedScrollPane));
 
         mainPanel.add(tablePanel, BorderLayout.CENTER);
+        
+        
+        JPanel actionAndBackPanel = new JPanel(new BorderLayout());
+        // Tambahkan tombol aksi di bawah tabel gabungan
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        
+        JButton addButton = new JButton("Tambah");
+        JButton editButton = new JButton("Ubah");
+        JButton deleteButton = new JButton("Hapus");
+
+        actionPanel.add(addButton);
+        actionPanel.add(editButton);
+        actionPanel.add(deleteButton);
+
+        // Tambahkan panel tombol aksi ke mainPanel
+
+        // Tambahkan action listener ke tombol
+        addButton.addActionListener(new AddActionListener());
+        editButton.addActionListener(new EditActionListener());
+        deleteButton.addActionListener(new DeleteActionListener());
+        
+        
 
         // Tombol Kembali
         backButton = new JButton("Kembali ke Beranda");
@@ -68,7 +93,13 @@ public class HalamanKategori extends JFrame {
         backButton.setFocusPainted(false);
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(backButton);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
+        // Tambahkan kedua panel ke panel vertikal
+actionAndBackPanel.add(actionPanel, BorderLayout.CENTER); // Tombol aksi di tengah
+actionAndBackPanel.add(buttonPanel, BorderLayout.SOUTH);  // Tombol kembali di bawah
+
+// Tambahkan panel vertikal ke mainPanel
+mainPanel.add(actionAndBackPanel, BorderLayout.SOUTH);
 
         // Memuat data ke tabel
         loadCategoryData();
@@ -148,21 +179,27 @@ public class HalamanKategori extends JFrame {
 
     // Memuat data gabungan ke tabel gabungan
     private void loadCombinedData() {
-        Kategori kategoriController = new Kategori();
-        List<Waste> wasteList = kategoriController.getAllWaste();
+    Kategori kategoriController = new Kategori();
+    List<Waste> wasteList = kategoriController.getAllWaste();
 
-        // Model untuk tabel gabungan
-        String[] columnNames = {"Kategori", "Jenis"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+    // Model untuk tabel gabungan
+    String[] columnNames = {"ID", "Kategori", "Jenis"};
+    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
-        for (Waste waste : wasteList) {
-            Object[] rowData = {waste.getCategory(), waste.getType()};
-            tableModel.addRow(rowData);
-        }
-
-        combinedTable.setModel(tableModel);
-            styleTableHeader(combinedTable);
+    for (Waste waste : wasteList) {
+        Object[] rowData = {waste.getId(), waste.getCategory(), waste.getType()};
+        tableModel.addRow(rowData);
     }
+
+    combinedTable.setModel(tableModel);
+    styleTableHeader(combinedTable);
+
+    // Sembunyikan kolom ID
+    combinedTable.getColumnModel().getColumn(0).setMinWidth(0);
+    combinedTable.getColumnModel().getColumn(0).setMaxWidth(0);
+    combinedTable.getColumnModel().getColumn(0).setWidth(0);
+}
+
 
     private class BackButtonActionListener implements ActionListener {
         @Override
@@ -172,4 +209,145 @@ public class HalamanKategori extends JFrame {
             HalamanKategori.this.dispose(); // Menutup halaman kategori
         }
     }
+    
+    private class AddActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JTextField categoryField = new JTextField();
+        JTextField typeField = new JTextField();
+        Object[] message = {
+            "Kategori:", categoryField,
+            "Jenis:", typeField
+        };
+
+        int option = JOptionPane.showConfirmDialog(
+            HalamanKategori.this,
+            message,
+            "Tambah Data",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (option == JOptionPane.OK_OPTION) {
+            String category = categoryField.getText();
+            String type = typeField.getText();
+
+            if (!category.isEmpty() && !type.isEmpty()) {
+                Kategori kategoriController = new Kategori();
+                Waste newWaste = new Waste();
+                newWaste.setCategory(category);
+                newWaste.setType(type);
+
+                try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+                    WasteMapper wasteMapper = session.getMapper(WasteMapper.class);
+                    wasteMapper.insertWaste(newWaste);
+                    session.commit();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                loadCategoryData();
+                loadTypeData();
+                loadCombinedData();
+                JOptionPane.showMessageDialog(HalamanKategori.this, "Data berhasil ditambahkan.");
+            } else {
+                JOptionPane.showMessageDialog(HalamanKategori.this, "Data tidak boleh kosong.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
+    
+    private class EditActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int selectedRow = combinedTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(HalamanKategori.this, "Pilih baris yang ingin diubah.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Ambil ID dari kolom tersembunyi
+        int id = (int) combinedTable.getValueAt(selectedRow, 0); // Kolom 0 adalah ID
+        String currentCategory = combinedTable.getValueAt(selectedRow, 1).toString();
+        String currentType = combinedTable.getValueAt(selectedRow, 2).toString();
+
+        JTextField categoryField = new JTextField(currentCategory);
+        JTextField typeField = new JTextField(currentType);
+        Object[] message = {
+            "Kategori Baru:", categoryField,
+            "Jenis Baru:", typeField
+        };
+
+        int option = JOptionPane.showConfirmDialog(
+            HalamanKategori.this,
+            message,
+            "Ubah Data",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (option == JOptionPane.OK_OPTION) {
+            String newCategory = categoryField.getText();
+            String newType = typeField.getText();
+
+            if (!newCategory.isEmpty() && !newType.isEmpty()) {
+                try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+                    WasteMapper wasteMapper = session.getMapper(WasteMapper.class);
+                    Waste wasteToUpdate = wasteMapper.selectWasteById(id); // Ambil data berdasarkan ID
+                    wasteToUpdate.setCategory(newCategory);
+                    wasteToUpdate.setType(newType);
+
+                    wasteMapper.updateWaste(wasteToUpdate);
+                    session.commit();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                loadCategoryData();
+                loadTypeData();
+                loadCombinedData();
+                JOptionPane.showMessageDialog(HalamanKategori.this, "Data berhasil diubah.");
+            } else {
+                JOptionPane.showMessageDialog(HalamanKategori.this, "Data tidak boleh kosong.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
+
+
+    private class DeleteActionListener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int selectedRow = combinedTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(HalamanKategori.this, "Pilih baris yang ingin dihapus.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Ambil ID dari kolom tersembunyi
+        int id = (int) combinedTable.getValueAt(selectedRow, 0); // Kolom 0 adalah ID
+
+        int option = JOptionPane.showConfirmDialog(
+            HalamanKategori.this,
+            "Apakah Anda yakin ingin menghapus data ini?",
+            "Konfirmasi Hapus",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (option == JOptionPane.YES_OPTION) {
+            try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+                WasteMapper wasteMapper = session.getMapper(WasteMapper.class);
+                wasteMapper.deleteWaste(id); // Hapus berdasarkan ID
+                session.commit();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            loadCategoryData();
+            loadTypeData();
+            loadCombinedData();
+            JOptionPane.showMessageDialog(HalamanKategori.this, "Data berhasil dihapus.");
+        }
+    }
+}
+
+
 }
